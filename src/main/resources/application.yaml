@@ -1,0 +1,85 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    export:
+      prometheus:
+          enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+
+jwt:
+  access:
+    secret: ${JWT_ACCESS_SECRET}
+  refresh:
+    secret: ${JWT_REFRESH_SECRET}
+
+auth-server:
+  base-url: ${AUTH_SERVER_BASE_URL}
+  endpoint:
+    registration: /registration
+    login: /login
+    activation: /activation
+    recovery: /recovery
+    refresh: /refresh
+    authentication: /authenticate
+    get-username-by-user-id: ''
+
+consumer-server:
+  base-url: ${CONSUMER_SERVER_BASE_URL}
+
+  data:
+    url: /data
+    save-company-data: /company
+    update-company-data: /company
+    get-company-data: /company
+    save-user-data: /user
+    update-user-data: /user
+    get-user-data: /user
+    get-contact-person-by-company-id: /contact-person
+
+  vacancy:
+    url: /vacancy
+    save: ''
+    update: ''
+    delete: ''
+    get-vacancy-by-id: /get-by-vacancy-id
+    get-vacancies-by-company-id: /get-by-company-id
+    get-vacancies: ''
+    get-vacancies-by-text: /get-by-text
+    archive-vacancy: /archive
+    unarchive-vacancy: /unarchive
+
+  vacancy-response:
+    url: /vacancy-response
+    save: ''
+    update: ''
+    delete: ''
+    get-all-user-id-by-company-id: /get-all-user-id
+    get-vacancy-response-by-company-id-and-id: /get-vacancy-response
+    get-vacancy-response-by-id: /get-vacancy-response
+    get-all-vacancy-responses-by-user-id: /get-all-vacancy-responses
+
+  payment:
+    url: /payment
+    save-payment-info: /info
+    update-payment-info: /info
+    get-payment-info-by-company-id: /info
+    get-payment-orders-by-company-id: /order
+    set-payment-order-completed: /order
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+  enable-kotlin: true
+  enable-spring-security: true
+
+
+
+server:
+  port: 8080
