@@ -66,10 +66,8 @@ class JwtAuthenticationFilter(
             .handle { response, sink ->
                 if (response.statusCode != HttpStatus.OK || response.body == null)
                     sink.error(UserNotAuthenticatedException())
-                else{
-                    println(authenticationDto.doOnNext { println(it) }.subscribe())
+                else
                     sink.next(response.body!!.toUsernamePasswordAuthentication())
-                }
 
             }
     }
