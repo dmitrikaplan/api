@@ -1,13 +1,10 @@
 pipeline{
-    agent none
+    agent any
     stages{
         stage("docker build"){
-            agent{
-                dockerfile{
-                    args '-t api:1'
-                }
-            }
             steps{
+                echo 'DOCKER BUILD STARTED......................................'
+                sh 'docker build -t api:1 .'
                 echo 'DOCKER BUILD FINISHED......................................'
             }
         }
