@@ -41,7 +41,6 @@ pipeline{
                 script {
                     sh('KUBECONFIG=${KUBECONFIG}')
                     sh('kubectl set image deployments/api-server-deployment api-server=$DOCKER_IMAGE_NAME:$TIMESTAMP')
-                    sh 'kubectl rollout restart deployment api-server-deployment'
                 }
             }
         }
