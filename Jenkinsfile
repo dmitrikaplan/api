@@ -7,6 +7,9 @@ pipeline{
                     args '-t api:1'
                 }
             }
+            steps{
+                echo 'DOCKER BUILD FINISHED......................................'
+            }
         }
     }
 }
