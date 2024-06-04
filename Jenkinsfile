@@ -4,6 +4,7 @@ pipeline{
     environment{
         dockerImageName = "dmitrykaplan/api:1"
         dockerImage = ""
+        JWT = credentials('jwt-kube')
     }
     stages{
         stage("docker build"){
@@ -30,9 +31,6 @@ pipeline{
 
         stage("deploying api-gateway"){
             steps {
-                environment{
-                    JWT = credentials('jwt-kube')
-                }
                 script {
                     sh "kubectl --token=${env.JWT} --server=https://192.168.49.2:8443 apply -f api-server.yaml"
                 }
