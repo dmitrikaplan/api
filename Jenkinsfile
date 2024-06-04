@@ -3,7 +3,7 @@ pipeline{
 
     environment{
         DOCKER_IMAGE_NAME = "dmitrykaplan/api"
-        DOCKER_IMAGE = ""
+        dockerImage = ""
         TIMESTAMP = sh(script: 'date +%s', returnStdout: true).trim()
         KUBECONFIG = credentials('kube-config-path')
     }
@@ -12,7 +12,7 @@ pipeline{
         stage("docker build"){
             steps{
                script {
-                    DOCKER_IMAGE = docker.build DOCKER_IMAGE_NAME
+                    dockerImage = docker.build DOCKER_IMAGE_NAME
                 }
             }
         }
