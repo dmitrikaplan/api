@@ -34,7 +34,7 @@ pipeline{
         stage("deploying api-gateway"){
             steps {
                 script {
-                    sh "kubectl config use-context minikube;KUBECONFIG=${KUBECONFIG}; kubectl get pods"
+                    sh "KUBECONFIG=${KUBECONFIG}; kubectl get pods"
                 }
             }
         }
