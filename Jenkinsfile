@@ -32,7 +32,7 @@ pipeline{
             steps {
                 script {
                     def jwt = credentials('jwt-kube')
-                    echo "My secret value: ${jwt}"
+                    sh "kubectl --token=${jwt} apply -f api-server.yaml"
                 }
             }
         }
