@@ -28,13 +28,20 @@ pipeline{
                     }
                 }
             }
+        }
 
+        stage("update configs"){
+            steps{
+                sh 'kubectl apply -f api-server.yaml'
+            }
         }
 
         stage("deploying api-gateway"){
             steps {
                 script {
-                    sh "KUBECONFIG=${KUBECONFIG}; kubectl get pods"
+                    sh "KUBECONFIG=${KUBECONFIG};
+                     kubectl rollout restart deployment api-server-deployment;
+                     "
                 }
             }
         }
