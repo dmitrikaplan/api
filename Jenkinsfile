@@ -5,6 +5,7 @@ pipeline{
         dockerImageName = "dmitrykaplan/api:1"
         dockerImage = ""
         JWT = credentials('jwt-kube')
+        KUBECONFIG = '/home/newton/.minikube/config'
     }
 
     stages{
@@ -33,7 +34,7 @@ pipeline{
         stage("deploying api-gateway"){
             steps {
                 script {
-                    sh "kubectl --token=${env.JWT} --server=http://192.168.49.2:8443 --validate=false apply -f api-server.yaml"
+                    sh "KUBECONFIG=${KUBECONFIG} kubectl get pods"
                 }
             }
         }
