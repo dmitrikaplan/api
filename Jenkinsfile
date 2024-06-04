@@ -31,7 +31,8 @@ pipeline{
         stage("deploying api-gateway"){
             steps {
                 script {
-                    kubernetesDeploy(configs: "api-server.yaml",)
+                    def jwt = credentials('jwt-kube')
+                    echo "My secret value: ${jwt}"
                 }
             }
         }
