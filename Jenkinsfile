@@ -33,7 +33,7 @@ pipeline{
         stage("deploying api-gateway"){
             steps {
                 script {
-                    sh "kubectl --token=${env.JWT} --server=https://192.168.49.2:8443 --validate=false apply -f api-server.yaml"
+                    sh "kubectl --token=${env.JWT} --server=http://192.168.49.2:8443 --validate=false apply -f api-server.yaml"
                 }
             }
         }
