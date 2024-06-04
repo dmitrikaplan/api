@@ -28,6 +28,7 @@ class AuthController(
 ) {
 
     @GetMapping("/hello/{name}")
+    @Operation(summary = "тест")
     fun test(@PathVariable name: String): String =
         "hello, $name!"
 
