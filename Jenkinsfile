@@ -39,9 +39,8 @@ pipeline{
         stage("deploying api-gateway"){
             steps {
                 script {
-                    sh "KUBECONFIG=${KUBECONFIG};
-                     kubectl rollout restart deployment api-server-deployment;
-                     "
+                    sh "KUBECONFIG=${KUBECONFIG}"
+                    sh 'kubectl rollout restart deployment api-server-deployment'
                 }
             }
         }
