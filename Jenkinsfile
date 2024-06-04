@@ -28,9 +28,11 @@ pipeline{
 
         }
 
-        steps {
-            script {
-                 kubernetesDeploy(configs: "api-server.yaml",)
+        stage("deploying api-gateway"){
+            steps {
+                script {
+                    kubernetesDeploy(configs: "api-server.yaml",)
+                }
             }
         }
     }
