@@ -30,10 +30,11 @@ pipeline{
 
         stage("deploying api-gateway"){
             steps {
-                script {
+                environment{
                     JWT = credentials('jwt-kube')
-                    echo "${JWT}"
-                    sh "kubectl --token=${JWT} --server=https://192.168.49.2:8443 apply -f api-server.yaml"
+                }
+                script {
+                    sh "kubectl --token=${env.JWT} --server=https://192.168.49.2:8443 apply -f api-server.yaml"
                 }
             }
         }
