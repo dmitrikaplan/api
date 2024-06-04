@@ -4,8 +4,7 @@ pipeline{
     environment{
         dockerImageName = "dmitrykaplan/api:1"
         dockerImage = ""
-        JWT = credentials('jwt-kube')
-        KUBECONFIG = '/home/newton/.kube/config'
+        KUBECONFIG = credentials('kube-config-path')
     }
 
     stages{
