@@ -3,7 +3,7 @@ pipeline{
 
     environment{
         DOCKER_IMAGE_NAME = "dmitrykaplan/api"
-        dockerImage = ""
+        DOCKER_IMAGE = ""
         TIMESTAMP = sh(script: 'date +%s', returnStdout: true).trim()
         KUBECONFIG = credentials('kube-config-path')
     }
@@ -12,7 +12,7 @@ pipeline{
         stage("docker build"){
             steps{
                script {
-                    dockerImage = docker.build DOCKER_IMAGE_NAME
+                    DOCKER_IMAGE = docker.build DOCKER_IMAGE_NAME
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline{
             steps{
                 script {
                     docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-                        dockerImage.push(TIMESTAMP)
+                        DOCKER_IMAGE.push(TIMESTAMP)
                     }
                 }
             }
