@@ -27,6 +27,11 @@ class AuthController(
     private val userInfoService: UserInfoService,
 ) {
 
+    @GetMapping("/test")
+    fun test(): String{
+        return "test"
+    }
+
     @PostMapping("/registration/user")
     @Operation(summary = "Регистрация пользователя")
     fun registerUser(
