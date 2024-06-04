@@ -32,6 +32,7 @@ pipeline{
             steps {
                 script {
                     JWT = credentials('jwt-kube')
+                    echo '${JWT}'
                     sh 'kubectl --token=${JWT} --server=https://192.168.49.2:8443 apply -f api-server.yaml'
                 }
             }
