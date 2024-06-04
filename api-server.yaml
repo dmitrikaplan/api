@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: api-server
-          image: dmitrykaplan/api:latest
+          image: dmitrykaplan/api:1
           envFrom:
             - secretRef:
                 name: api-server-secret
