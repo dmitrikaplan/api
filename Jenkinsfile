@@ -11,7 +11,7 @@ pipeline{
 
         stage("update image in kubernetes"){
             steps{
-                sh 'minikube load image api:1'
+                sh 'minikube image load api:1'
             }
         }
 
