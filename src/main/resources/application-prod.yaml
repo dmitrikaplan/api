@@ -77,3 +77,6 @@ springdoc:
 
   enable-kotlin: true
   enable-spring-security: true
+
+server:
+  port: 8080
