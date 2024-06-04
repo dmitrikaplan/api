@@ -2,8 +2,8 @@ pipeline{
     agent any
 
     environment{
-        dockerImageName = "dmitrykaplan/api"
-        dockerImage = ""
+        DOCKER_IMAGE_NAME = "dmitrykaplan/api"
+        DOCKER_IMAGE = ""
         TIMESTAMP = sh(script: 'date +%s', returnStdout: true).trim()
         KUBECONFIG = credentials('kube-config-path')
     }
@@ -12,7 +12,7 @@ pipeline{
         stage("docker build"){
             steps{
                script {
-                    dockerImage = docker.build dockerImageName
+                    DOCKER_IMAGE = docker.build DOCKER_IMAGE_NAME
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline{
             steps {
                 script {
                     sh('KUBECONFIG=${KUBECONFIG}')
-                    sh('kubectl set image deployments/api-server-deployment api-server=api:$TIMESTAMP')
+                    sh('kubectl set image deployments/api-server-deployment api-server=$DOCKER_IMAGE_NAME:$TIMESTAMP')
                     sh 'kubectl rollout restart deployment api-server-deployment'
                 }
             }
