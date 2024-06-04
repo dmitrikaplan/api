@@ -1,29 +1,36 @@
 pipeline{
     agent any
+
+    environment{
+        dockerImageName = "dmitrykaplan/api:1"
+        dockerImage = ""
+    }
     stages{
         stage("docker build"){
             steps{
-                echo 'DOCKER BUILD STARTED......................................'
-                sh 'docker build -t api:1 .'
-                echo 'DOCKER BUILD FINISHED......................................'
+               script {
+                    dockerImage = docker.build dockerImageName
+                }
             }
         }
 
-        stage("update image in kubernetes"){
-            steps{
-                sh 'minikube image load api:1'
+        stage("pushing docker image"){
+            environment{
+                registryCredential = 'dockerhub-credentials'
             }
+            steps{
+                script {
+                    docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+                        dockerImage.push("1")
+                    }
+                }
+            }
+
         }
 
-        stage("update kubernetes deployment"){
-            steps{
-                sh 'kubectl apply -f api-server.yaml'
-            }
-        }
-
-        stage("restart api-server pods"){
-            steps{
-                sh 'kubectl rollout restart deployment api-server-deployment'
+        steps {
+            script {
+                 kubernetesDeploy(configs: "api-server.yaml",)
             }
         }
     }
