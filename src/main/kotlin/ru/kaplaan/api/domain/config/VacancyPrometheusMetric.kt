@@ -1,6 +1,7 @@
 package ru.kaplaan.api.domain.config
 
 import io.micrometer.core.instrument.MeterRegistry
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -9,9 +10,11 @@ import java.util.concurrent.atomic.AtomicLong
 
 @Component
 class VacancyPrometheusMetric(
-    meterRegistry: MeterRegistry,
+    private val meterRegistry: MeterRegistry,
     private val webClient: WebClient
 ) {
+
+    private val log = LoggerFactory.getLogger(javaClass)
 
     @Value("\${consumer-server.base-url}")
     lateinit var baseUrl: String
@@ -33,13 +36,15 @@ class VacancyPrometheusMetric(
 
     @Scheduled(fixedDelay = 5000L, initialDelay = 0)
     fun scheduleCountNonArchiveVacancies(){
+        log.info("scheduleCountNonArchiveVacancies")
         webClient
             .get()
             .uri("$baseUrl$url$countNonArchiveVacanciesEndpoint")
             .retrieve()
             .bodyToMono(Long::class.java)
             .doOnNext {
-                countNonArchiveVacancies.set(it)
+                println("scheduleCountArchiveVacancies")
+                meterRegistry.gauge("non-archive-vacancies", AtomicLong(0))!!
             }
             .subscribe()
     }
@@ -47,13 +52,15 @@ class VacancyPrometheusMetric(
 
     @Scheduled(fixedDelay = 5000L, initialDelay = 0)
     fun scheduleCountArchiveVacancies(){
+        log.info("scheduleCountArchiveVacancies")
         webClient
             .get()
             .uri("$baseUrl$url$countArchiveVacanciesEndpoint")
             .retrieve()
             .bodyToMono(Long::class.java)
             .doOnNext {
-                countArchiveVacancies.set(it)
+                println("scheduleCountArchiveVacancies")
+                meterRegistry.gauge("archive-vacancies", AtomicLong(0))!!
             }
             .subscribe()
     }
