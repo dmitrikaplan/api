@@ -30,6 +30,12 @@ auth-server:
 consumer-server:
   base-url: ${CONSUMER_SERVER_BASE_URL}
 
+
+  metrics:
+    url: /metrics
+    count-non-archive-vacancies: /non-archive-vacancies
+    count-archive-vacancies: /archive-vacancies
+
   data:
     url: /data
     save-company-data: /company
